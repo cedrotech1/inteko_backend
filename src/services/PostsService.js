@@ -1,7 +1,16 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize, where } from 'sequelize';
 import db from "../database/models/index.js";
 // const Post = db["Posts"];
-const { Provinces, Districts, Sectors, Cells, Villages, Categories, Users, Posts, Notifications } = db;
+const { Provinces, Districts, Sectors, Cells, Villages, Categories, Users, Posts, Notifications,Comments } = db;
+
+export const createComment = async (data) => {
+  try {
+    const newComment = await Comments.create(data);
+    return newComment;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
 
 export const getOnePostWithDetails = async (id) => {
@@ -36,6 +45,10 @@ export const getOnePostWithDetails = async (id) => {
         {
           model: Users,
           as: "user",
+        },
+        {
+          model: Comments,
+          as: "comments",
         }
       ],
 
@@ -94,6 +107,7 @@ export const getAllPostes_forlocation = async (location,location_id,statusArray)
 export const getAllPostes = async () => {
   try {
     const Info = await Posts.findAll({
+      where: { status: "approved" },
       include: [
         {
           model: Categories,
@@ -122,6 +136,10 @@ export const getAllPostes = async () => {
         {
           model: Users,
           as: "user",
+        },
+        {
+          model: Comments,
+          as: "comments",
         }
       ],
     });
@@ -184,10 +202,10 @@ export const approve = async (id,status) => {
   return null;
 };
 
-export const reject = async (id) => {
+export const reject = async (id,status) => {
   const restoToUpdate = await Posts.findOne({ where: { id } });
   if (restoToUpdate) {
-    await Posts.update({ status: 'inactive' }, { where: { id } });
+    await Posts.update({ status: status }, { where: { id } });
     return restoToUpdate;
   }
   return null;

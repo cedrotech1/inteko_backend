@@ -6,6 +6,8 @@ import {
   getOnePostController,
   approvePostController,
   rejectPostController,
+  addCommentController,
+
 
   
 
@@ -21,5 +23,6 @@ router.get("/all", protect, PostWithAllController);
 router.get("/one/:id", optionalProtect, getOnePostController);
 router.put("/approve/:id", protect, approvePostController);
 router.put("/reject/:id", protect, rejectPostController);
+router.post("/comment", addCommentController);
 
 export default router;

@@ -8,7 +8,8 @@ import {
   updateOne,
   approve,
   reject,
-  getAllPostes_forlocation
+  getAllPostes_forlocation,
+  createComment
   
 
 } from "../services/PostsService.js";
@@ -695,6 +696,7 @@ export const approvePostController = async (req, res) => {
     for (const user of allUsers) {
       await sendNotification(user,claim);
     }
+    console.log(req.user)
 
     return res.status(200).json({
       success: true,
@@ -800,3 +802,32 @@ export const rejectPostController = async (req, res) => {
     });
   }
 };
+
+export const addCommentController = async (req, res) => {
+  try {
+    const { postID, name, address, comment } = req.body;
+
+    if (!postID || !name || !comment) {
+      return res.status(400).json({
+        success: false,
+        message: "Post ID, name, and comment are required",
+      });
+    }
+
+    const newComment = await createComment({ postID, name, address, comment });
+
+    return res.status(201).json({
+      success: true,
+      message: "Comment created successfully",
+      comment: newComment,
+    });
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+      error: error.message,
+    });
+  }
+};
+

@@ -11,9 +11,6 @@ import {
   checkEmail,
   checkCode,
   ResetPassword,
-  getUsersWithoutAppointments,
-  processAddUsers,
-  getAllUsers11
 } from '../controllers/userController.js';
 import { protect } from '../middlewares/protect.js';
 import multer from 'multer';
@@ -21,8 +18,6 @@ const router = express.Router();
 
 const upload = multer({ dest: 'uploads/' });
 
-router.get('/upload',protect, upload.single('file'),express.json(),processAddUsers);
-router.get('/formission', protect, getUsersWithoutAppointments);
 router.get('/', protect, getAllUsers);
 router.get('/:id', protect, getOneUser);
 router.post('/addUser', protect, addUser);

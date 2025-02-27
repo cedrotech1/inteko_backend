@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       Posts.belongsTo(models.Sectors, { foreignKey: "sector_id", as: "sector" });
       Posts.belongsTo(models.Cells, { foreignKey: "cell_id", as: "cell" });
       Posts.belongsTo(models.Villages, { foreignKey: "village_id", as: "village" });
+
+      Posts.hasMany(models.Comments, { foreignKey: "postID", as: "comments" });
     }
   }
   Posts.init(

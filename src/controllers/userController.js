@@ -14,7 +14,7 @@ import {
   getUserByPhone,
   getUserByCode,
   updateUserCode,
-  getUsers1
+
 } from "../services/userService.js";
 import {
   createNotification,
@@ -28,106 +28,7 @@ const xlsx = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 
-export const processAddUsers = async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ success: false, message: 'No file uploaded.' });
-  }
 
-  const fileExtension = path.extname(req.file.originalname);
-  if (!['.xlsx', '.xls'].includes(fileExtension)) {
-    return res.status(400).json({ success: false, message: 'Invalid file format. Please upload an Excel file.' });
-  }
-
-  const excelFilePath = req.file.path;
-  const results = [];
-  const duplicateUsers = [];
-
-  try {
-    const workbook = xlsx.readFile(excelFilePath);
-    const sheetName = workbook.SheetNames[0];
-    const sheet = workbook.Sheets[sheetName];
-
-    // Convert the sheet to JSON
-    const data = xlsx.utils.sheet_to_json(sheet);
-
-    for (const row of data) {
-      if (!row.FIRSTNAME || !row.LASTNAME || !row.EMAIL || !row.PHONE || !row.ROLE) {
-        continue; // Skip incomplete entries
-      }
-
-      const email = row.EMAIL.trim().toLowerCase();
-      const phone = row.PHONE;
-      const role = row.ROLE;
-
-
-  
-
-      // Check for duplicate users
-      const existingUser = await getUserByEmail(email);
-      if (existingUser) {
-        duplicateUsers.push(email);
-        continue;
-      }
-
-      const phoneExist = await getUserByPhone(phone.toString());
-      if (phoneExist) {
-        duplicateUsers.push(phone);
-        continue;
-      }
-
-      // Generate a secure password
-      const password = `D${Math.random().toString(36).slice(-8)}`;
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      const userData = {
-        firstname: row.FIRSTNAME,
-        lastname: row.LASTNAME,
-        phone,
-        email,
-        role,
-        password: hashedPassword,
-        status: 'active',
-      };
-
-      const newUser = await createUser(userData);
-      newUser.password = password; // Temporary plain password for email notification
-
-      // Send email
-      await new Email(newUser).sendAccountAdded();
-
-      // Create notification
-      await createNotification({
-        userID: newUser.id,
-        title: "Account created for you",
-        message: "Your account has been successfully created.",
-        type: 'account',
-        isRead: false,
-      });
-
-      results.push({
-        id: newUser.id,
-        firstname: newUser.firstname,
-        lastname: newUser.lastname,
-        email: newUser.email,
-        role: newUser.role,
-      });
-    }
-
-    // Remove the uploaded file after processing
-    fs.unlinkSync(excelFilePath);
-
-    return res.json({
-      success: true,
-      message: 'Users processed successfully.',
-      createdUsers: results,
-      duplicateUsers: duplicateUsers.length > 0 ? `Duplicate users skipped: ${duplicateUsers.join(', ')}` : 'No duplicates found',
-    });
-
-  } catch (error) {
-    console.error('Error processing the Excel file:', error.message);
-    return res.status(500).json({ success: false, message: 'Error processing the Excel file.', error: error.message });
-  }
-};
 
 export const changePassword = async (req, res) => {
   console.log(req.user.id)
@@ -227,13 +128,13 @@ export const addUser = async (req, res) => {
       message: "Please provide phone",
     });
   }
-
-  if (req.body.role || req.body.role === "") {
-    return res.status(400).json({
-      success: false,
-      message: "Please provide role",
-    });
-  }
+  console.log(req.body);
+  // if (req.body.role || req.body.role === "") {
+  //   return res.status(400).json({
+  //     success: false,
+  //     message: "Please provide role",
+  //   });
+  // }
 
   // if (!req.body.province_id || req.body.district_id === "" || req.body.sector_id === "" || req.body.cell_id === "" || req.body.village_id === "") {
   //   return res.status(400).json({
@@ -273,6 +174,8 @@ export const addUser = async (req, res) => {
     // create user with generated password and set status to active
     req.body.password = password;
     req.body.status = "active";
+
+
 
     const newUser = await createUser(req.body);
     newUser.password = password;
@@ -329,34 +232,7 @@ export const getAllUsers = async (req, res) => {
 };
 
 
-export const getUsersWithoutAppointments = async (req, res) => {
-  try {
-    // Fetch all users with their appointments
-    let users = await getUsers1();
 
-
-
-    // Filter users who have no appointments
-    const usersWithoutAppointments = users.filter(user => user.appointments.length === 0 );
-
-    if (usersWithoutAppointments.length===0) {
-      return res.status(404).json({
-        success: false,
-        message: "Users not found",
-        users:[]
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: "Users retrieved successfully",
-      users:usersWithoutAppointments
-    });
-  } catch (error) {
-    console.error("Error fetching users without appointments:", error);
-    return res.status(500).json({ error: "Internal server error" });
-  }
-};
 
 
 export const getOneUser = async (req, res) => {

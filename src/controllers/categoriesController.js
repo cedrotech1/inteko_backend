@@ -1,16 +1,11 @@
 import {
-  // Update the necessary imports for Category services here
   createCategory,
   getAllCategories,
   deleteOneCategory,
-  checkExistingCategory,
   getOneCategoryWithDetails,
   updateOneCategory,
-  activatecategorys,
-  diactivatecategorys,
-  getcategory
+
 } from "../services/categoriesService.js";
-import imageUploader from "../helpers/imageUplouder.js";
 
 export const addCategoryController = async (req, res) => {
   try {

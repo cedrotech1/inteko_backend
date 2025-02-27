@@ -5,8 +5,8 @@ module.exports = {
     return queryInterface.bulkInsert('Notifications', [
       {
         userID: 1, // assuming user with ID 1 exists
-        title: 'profile changed',
-        message: 'Your profile has been changed, they added profile detail for you',
+        title: 'new post',
+        message: 'A new post has been added',
         type: 'alert',
         isRead: false, // Unread notification
         createdAt: new Date(),

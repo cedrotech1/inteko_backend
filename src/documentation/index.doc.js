@@ -23,6 +23,8 @@ const options = {
     { name: "post", description: "post" },
     { name: "categories", description: "categories" },
     { name: "notification", description: "notification" },
+    { name: "address", description: "address" },
+    { name: "comments", description: "comments" },
 
 
 
@@ -83,7 +85,7 @@ const options = {
                 lastname: "Doe",
                 email: "test@example.com",
                 phone: "08012345678",
-                role: "Commander-Officer   /user",
+                role: "province_leader,district_leader,sector_leader,cell_leader,village_leader,admin",
                 gender: "Male",
                 address: "Gatsata",
                 province_id:"1",
@@ -141,56 +143,7 @@ const options = {
         },
       },
     },
-    "/api/v1/users/com": {
-      get: {
-        tags: ["Users"],
-        summary: "Get all officers users",
-        description: "Get all officers users",
-        operationId: "getAllUsersofficers",
-        responses: {
-          200: {
-            description: "User officers deleted successfully",
-          },
-          400: {
-            description: "Bad request",
-          },
-          401: {
-            description: "Unauthorized",
-          },
-          404: {
-            description: "User not found",
-          },
-          500: {
-            description: "Something went wrong",
-          },
-        },
-      },
-    },
-    "/api/v1/users/formission": {
-      get: {
-        tags: ["Users"],
-        summary: "Get all users for mission",
-        description: "Get all users",
-        operationId: "getAllUsersForMission",
-        responses: {
-          200: {
-            description: "User retrieved successfully",
-          },
-          400: {
-            description: "Bad request",
-          },
-          401: {
-            description: "Unauthorized",
-          },
-          404: {
-            description: "User not found",
-          },
-          500: {
-            description: "Something went wrong",
-          },
-        },
-      },
-    },
+
 
     "/api/v1/users/{id}": {
       get: {
@@ -466,9 +419,6 @@ const options = {
         },
       },
     },
-
-
-
     "/api/v1/users/delete/{id}": {
       delete: {
         tags: ["Users"],
@@ -580,10 +530,7 @@ const options = {
     },
    
 
-
-
-
-
+// post
 
     "/api/v1/post/add": {
       post: {
@@ -1058,10 +1005,7 @@ const options = {
         },
       },
     },
-
-
-
-
+// category
 
     "/api/v1/categories/add": {
       post: {
@@ -1323,6 +1267,73 @@ const options = {
       },
     },
 
+    "/api/v1/address/": {
+      get: {
+        tags: ["address"],
+        summary: "Get a address",
+        description: "Get a address",
+        operationId: "address",
+    
+        responses: {
+          200: {
+            description: "address deleted successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "User not found",
+          },
+          500: {
+            description: "Something went wrong",
+          },
+        },
+      },
+    },
+
+    "/api/v1/post/comment": {
+      post: {
+        tags: ["comments"],
+        summary: "Add a comment",
+        description: "Add a comment",
+        operationId: "addcomment",
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/Comment",
+              },
+              example: {
+                name: "obina",
+                address: "huye/ngoma",
+                comment: "yes yes.......",
+                postID:"1",
+               
+              },
+            },
+            required: true,
+          },
+        },
+        responses: {
+          201: {
+            description: "User created successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          500: {
+            description: "Something went wrong",
+          },
+        },
+      },
+    },
+
 
   },
 
@@ -1457,6 +1468,30 @@ const options = {
          
         },
       },
+      Comment: {
+        type: "object",
+        properties: {
+          postID: {
+            type: "string",
+            description: "name postID",
+          },
+          name: {
+            type: "string",
+            description: "name commenter",
+          },
+          comment: {
+            type: "string",
+            description: "name comment",
+          },
+          address: {
+            type: "string",
+            description: "address",
+          },
+
+         
+        },
+      },
+
 
     
     },

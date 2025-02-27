@@ -1,1 +1,1 @@
-# military backend
+# inteko backend

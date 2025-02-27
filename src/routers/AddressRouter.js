@@ -11,8 +11,8 @@ const router = express.Router();
 
 // router.delete("/delete/:id",protect, deleteOneCategoryController);
 // router.post("/add/",protect, addCategoryController);
-router.get("/filter", protect,getFilteredAddressData);
-router.get("/", protect,getAddressHierarchy);
+router.get("/filter",getFilteredAddressData);
+router.get("/",getAddressHierarchy);
 router.post("/address",protect, addressController);
 
 
