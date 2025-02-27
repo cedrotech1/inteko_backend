@@ -28,9 +28,6 @@ module.exports = {
       gender: {
         type: Sequelize.ENUM("Male", "Female", "Other")
       },
-      address: {
-        type: Sequelize.TEXT
-      },
       code: {
         type: Sequelize.STRING
       },
