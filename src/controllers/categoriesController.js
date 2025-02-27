@@ -17,9 +17,6 @@ export const addCategoryController = async (req, res) => {
     }
 
     const newCategory = await createCategory(req.body);
-
-    // TODO: Handle any additional logic related to Category creation
-
     return res.status(201).json({
       success: true,
       message: "Category created successfully",
