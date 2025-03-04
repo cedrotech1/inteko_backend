@@ -49,6 +49,14 @@ export const getOnePostWithDetails = async (id) => {
         {
           model: Comments,
           as: "comments",
+          include: [
+            {
+              model: Users,
+              as: "user", 
+              attributes: ["id", "firstname", "lastname", "email", "image"], 
+            },
+          ],
+          
         }
       ],
 
@@ -93,6 +101,18 @@ export const getAllPostes_forlocation = async (location,location_id,statusArray)
         {
           model: Users,
           as: "user",
+        },
+        {
+          model: Comments,
+          as: "comments",
+          include: [
+            {
+              model: Users,
+              as: "user", 
+              attributes: ["id", "firstname", "lastname", "email", "image"], 
+            },
+          ],
+          
         }
       ],
     });

@@ -14,6 +14,7 @@ import {
   getUserByPhone,
   getUserByCode,
   updateUserCode,
+  getMyUsers
 
 } from "../services/userService.js";
 import {
@@ -129,27 +130,22 @@ export const addUser = async (req, res) => {
     });
   }
   console.log(req.body);
-  // if (req.body.role || req.body.role === "") {
-  //   return res.status(400).json({
-  //     success: false,
-  //     message: "Please provide role",
-  //   });
-  // }
+  
+  let  province_id = req.user.province_id;
+  let district_id = req.user.district_id;
+  let sector_id = req.user.sector_id;
+  let cell_id = req.user.cell_id;
+  let village_id = req.user.village_id;
 
-  // if (!req.body.province_id || req.body.district_id === "" || req.body.sector_id === "" || req.body.cell_id === "" || req.body.village_id === "") {
-  //   return res.status(400).json({
-  //     success: false,
-  //     message: "Please provide full location",
-  //   });
-  // }
-
-
-  if (role != "admin") {
-      return res.status(400).json({
-        success: false,
-        message: "you are not allowed add user lather",
-      });
+  if(req.body.role=='citizen')
+  {
+    req.body.province_id=province_id;
+    req.body.district_id=district_id;
+    req.body.sector_id=sector_id;
+    req.body.cell_id=cell_id;
+    req.body.village_id=village_id;
   }
+
 
   try {
     const userExist = await getUserByEmail(req.body.email);
@@ -169,11 +165,13 @@ export const addUser = async (req, res) => {
     }
 
     // generate password
-    const password = `D${Math.random().toString(36).slice(-8)}`;
+    // const password = `D${Math.random().toString(36).slice(-8)}`;
+    const password = `1234`;
 
     // create user with generated password and set status to active
     req.body.password = password;
     req.body.status = "active";
+    req.body.role = "citizen";
 
 
 
@@ -215,6 +213,16 @@ export const getAllUsers = async (req, res) => {
   try { 
     let filteredusers=[];
     let users = await getUsers();
+
+    if(req.user.role=='village_leader'){
+      let myusers = await getMyUsers(req.user.village_id);
+      return res.status(200).json({
+        success: true,
+        message: "Users retrieved successfully",
+        users:myusers,
+      });
+
+    }
    
 
     return res.status(200).json({

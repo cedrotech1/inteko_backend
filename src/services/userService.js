@@ -6,6 +6,50 @@ const { Provinces, Districts, Sectors, Cells, Villages,Categories,Users,Posts,No
 
 import Sequelize, { where } from "sequelize";
 
+export const getMyUsers = async (id) => {
+  try {
+    const allUsers = await users.findAll({
+      where: {
+        role: 'citizen',
+        village_id: id, // Corrected this line for proper AND condition
+      },
+      attributes: { exclude: ["password"] },
+      include: [
+        {
+          model: Notifications,
+          as: "notifications",
+        },
+        {
+          model: Provinces,
+          as: "province",
+        },
+        {
+          model: Districts,
+          as: "district",
+        },
+        {
+          model: Sectors,
+          as: "sector",
+        },
+        {
+          model: Cells,
+          as: "cell",
+        },
+        {
+          model: Villages,
+          as: "village",
+        },
+      ],
+    });
+
+    return allUsers;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error; // Re-throw the error to be handled by the caller
+  }
+};
+
+
 export const getUsers = async () => {
   try {
     const allUsers = await users.findAll(

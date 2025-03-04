@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // A comment belongs to a post
       Comments.belongsTo(models.Posts, { foreignKey: "postID", as: "post" });
+      Comments.belongsTo(models.Users, { foreignKey: "userID", as: "user" });
     }
   }
 
@@ -15,13 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      name: {
-        type: DataTypes.STRING,
+      userID: {  // Linking comment to the user
+        type: DataTypes.INTEGER,
         allowNull: false,
-      },
-      address: {
-        type: DataTypes.STRING,
-        allowNull: true,
       },
       comment: {
         type: DataTypes.TEXT,

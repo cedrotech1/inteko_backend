@@ -18,13 +18,14 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
-      name: {
-        type: Sequelize.STRING,
+      userID: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-      },
-      address: {
-        type: Sequelize.STRING,
-        allowNull: true,
+        references: {
+          model: "Users", // Refers to Users table
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
       comment: {
         type: Sequelize.TEXT,

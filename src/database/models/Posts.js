@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Posts.belongsTo(models.Villages, { foreignKey: "village_id", as: "village" });
 
       Posts.hasMany(models.Comments, { foreignKey: "postID", as: "comments" });
+   
     }
   }
   Posts.init(

@@ -1307,8 +1307,6 @@ const options = {
                 $ref: "#/components/schemas/Comment",
               },
               example: {
-                name: "obina",
-                address: "huye/ngoma",
                 comment: "yes yes.......",
                 postID:"1",
                
@@ -1475,18 +1473,15 @@ const options = {
             type: "string",
             description: "name postID",
           },
-          name: {
+          UserID: {
             type: "string",
-            description: "name commenter",
+            description: "ID ",
           },
           comment: {
             type: "string",
             description: "name comment",
           },
-          address: {
-            type: "string",
-            description: "address",
-          },
+        
 
          
         },

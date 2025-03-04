@@ -341,7 +341,11 @@ export const PostWithAllController = async (req, res) => {
     } else if (role === "village_leader") {
       statusArray = ["approved","pending","approvedbycell","rejectedbycell","approvedbyvillage","rejectedbyvillage","rejectedbysector","approvedbysector"];
       data = await getAllPostes_forlocation("village_id", village_id, statusArray);
-    }
+    
+  } else if (role === "citizen") {
+    statusArray = ["approved"];
+    data = await getAllPostes_forlocation("village_id", village_id, statusArray);
+  }
 
     if (!data || data.length === 0) {
       return res.status(404).json({
@@ -805,16 +809,18 @@ export const rejectPostController = async (req, res) => {
 
 export const addCommentController = async (req, res) => {
   try {
-    const { postID, name, address, comment } = req.body;
+    let userID=req.user.id;
 
-    if (!postID || !name || !comment) {
+    const { postID, comment } = req.body;
+
+    if (!postID || !comment) {
       return res.status(400).json({
         success: false,
         message: "Post ID, name, and comment are required",
       });
     }
 
-    const newComment = await createComment({ postID, name, address, comment });
+    const newComment = await createComment({ postID, userID, comment });
 
     return res.status(201).json({
       success: true,
