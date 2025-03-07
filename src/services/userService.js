@@ -248,6 +248,21 @@ export const getUserByEmail = async (email) => {
 };
 
 
+export const getUserByNid = async (nid) => {
+  try {
+    const user = await users.findOne({
+      where: { nid },
+    });
+
+    return user;
+  } catch (error) {
+    // Handle errors here
+    console.error("Error fetching user:", error);
+    throw error;
+  }
+};
+
+
 
 
 

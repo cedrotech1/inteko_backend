@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       password: DataTypes.STRING,
       phone: { type: DataTypes.STRING, unique: true },
       gender: DataTypes.STRING,
+
+      nid: DataTypes.STRING,
+      familyinfo: DataTypes.STRING,
+    
+
       code: DataTypes.STRING,
       status: DataTypes.STRING,
       image: DataTypes.STRING,
@@ -34,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
           "cell_leader",
           "village_leader",
           "admin",
+          "citizen",
         ),
         allowNull: false,
       },

@@ -7,12 +7,7 @@ module.exports = {
         name: 'minutes',
         createdAt: new Date(),
         updatedAt: new Date(),
-      },
-      {
-        name: 'events',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+      }
     
     ]);
   },

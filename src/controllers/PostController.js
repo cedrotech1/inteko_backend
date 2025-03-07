@@ -333,13 +333,13 @@ export const PostWithAllController = async (req, res) => {
       statusArray = ["approved","rejected"];
       data = await getAllPostes_forlocation("district_id", district_id, statusArray);
     } else if (role === "sector_leader") {
-      statusArray = ["approvedbycell","rejectedbysector","approved"];
+      statusArray = ["approvedbycell","rejectedbysector","approved","rejected"];
       data = await getAllPostes_forlocation("sector_id", sector_id, statusArray);
     } else if (role === "cell_leader") {
-      statusArray = ["approvedbyvillage","approvedbycell","rejectedbycell","approvedbysector","rejectedbysector","approved"];
+      statusArray = ["approvedbyvillage","approvedbycell","rejectedbycell","approvedbysector","rejectedbysector","approved","rejected"];
       data = await getAllPostes_forlocation("cell_id", cell_id, statusArray);
     } else if (role === "village_leader") {
-      statusArray = ["approved","pending","approvedbycell","rejectedbycell","approvedbyvillage","rejectedbyvillage","rejectedbysector","approvedbysector"];
+      statusArray = ["approved","pending","approvedbycell","rejectedbycell","approvedbyvillage","rejectedbyvillage","rejectedbysector","approvedbysector","rejected"];
       data = await getAllPostes_forlocation("village_id", village_id, statusArray);
     
   } else if (role === "citizen") {

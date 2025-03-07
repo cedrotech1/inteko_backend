@@ -7,18 +7,20 @@ import {
   approvePostController,
   rejectPostController,
   addCommentController,
-
-
-  
-
 } from "../controllers/PostController.js";
+import {
+  getCitizenPosts
+} from "../controllers/attandanceController.js";
+
 import { protect, optionalProtect } from "../middlewares/protect.js";
 
 const router = express.Router();
+// 0783043021
 
 router.delete("/delete/:id", protect, deleteOnePostController);
 router.post("/add/", protect, addPostController);
 router.get("/", optionalProtect, PostWithAllController);
+router.get("/citizen", protect, getCitizenPosts);
 router.get("/all", protect, PostWithAllController);
 router.get("/one/:id", optionalProtect, getOnePostController);
 router.put("/approve/:id", protect, approvePostController);

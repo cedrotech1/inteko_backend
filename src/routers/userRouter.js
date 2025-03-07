@@ -11,6 +11,7 @@ import {
   checkEmail,
   checkCode,
   ResetPassword,
+  SignUp
 } from '../controllers/userController.js';
 import { protect } from '../middlewares/protect.js';
 import multer from 'multer';
@@ -21,6 +22,7 @@ const upload = multer({ dest: 'uploads/' });
 router.get('/', protect, getAllUsers);
 router.get('/:id', protect, getOneUser);
 router.post('/addUser', protect, addUser);
+router.post('/signup', SignUp);
 router.put('/update/:id', protect, updateOneUser);
 router.delete('/delete/:id', protect, deleteOneUser);
 router.put('/activate/:id', protect, activateOneUser);

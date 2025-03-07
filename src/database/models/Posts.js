@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Posts extends Model {
     static associate(models) {
@@ -13,9 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       Posts.belongsTo(models.Villages, { foreignKey: "village_id", as: "village" });
 
       Posts.hasMany(models.Comments, { foreignKey: "postID", as: "comments" });
-   
+      
+      // New Associations
+      Posts.hasMany(models.Attendances, { foreignKey: "postID", as: "attendances" });
+      Posts.hasMany(models.Penalties, { foreignKey: "postID", as: "penalties" });
     }
   }
+
   Posts.init(
     {
       userID: DataTypes.INTEGER,
@@ -36,5 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Posts",
     }
   );
+
   return Posts;
 };

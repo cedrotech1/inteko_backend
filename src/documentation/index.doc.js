@@ -25,6 +25,8 @@ const options = {
     { name: "notification", description: "notification" },
     { name: "address", description: "address" },
     { name: "comments", description: "comments" },
+    { name: "attandance", description: "attandance" },
+    { name: "penalties", description: "penalties" },
 
 
 
@@ -607,6 +609,33 @@ const options = {
         },
       },
     },
+
+    "/api/v1/post/citizen": {
+      get: {
+        tags: ["post"],
+        summary: "Get a citizen post",
+        description: "Get a citizen post",
+        operationId: "getcitizen",
+    
+        responses: {
+          200: {
+            description: "User deleted successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "User not found",
+          },
+          500: {
+            description: "Something went wrong",
+          },
+        },
+      },
+    },
     "/api/v1/post/delete/{id}": {
       delete: {
         tags: ["post"],
@@ -808,6 +837,315 @@ const options = {
         },
       },
     },
+
+
+      "/api/v1/attandance/add": {
+        post: {
+          tags: ["attandance"],
+          summary: "Add an attendance",
+          description: "Record a user's attendance for a post",
+          operationId: "addAttendance",
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                example: {
+                  userID: 1,
+                  postID: 1,
+                  attended: true
+                },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: "Attendance recorded successfully",
+            },
+            400: {
+              description: "Bad request",
+            },
+            401: {
+              description: "Unauthorized",
+            },
+            500: {
+              description: "Something went wrong",
+            },
+          },
+        },
+      },
+      
+      "/api/v1/attandance": {
+        get: {
+          tags: ["attandance"],
+          summary: "Get all attendances",
+          description: "Retrieve all attendance records with user and post details",
+          operationId: "getAttendances",
+          responses: {
+            200: {
+              description: "Attendances fetched successfully",
+            },
+            401: {
+              description: "Unauthorized",
+            },
+            500: {
+              description: "Something went wrong",
+            },
+          },
+        },
+      },
+    
+      "/api/v1/attandance/{id}": {
+        get: {
+          tags: ["attandance"],
+          summary: "Get attendance by ID",
+          description: "Fetch a single attendance record by ID",
+          operationId: "getAttendanceById",
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              schema: {
+                type: "integer",
+              },
+              description: "Attendance ID",
+            },
+          ],
+          responses: {
+            200: {
+              description: "Attendance fetched successfully",
+            },
+            404: {
+              description: "Attendance not found",
+            },
+            500: {
+              description: "Something went wrong",
+            },
+          },
+        },
+        
+        delete: {
+          tags: ["attandance"],
+          summary: "Delete an attendance",
+          description: "Remove an attendance record",
+          operationId: "deleteAttendance",
+          parameters: [
+            {
+              name: "id",
+              in: "path",
+              required: true,
+              schema: {
+                type: "integer",
+              },
+              description: "Attendance ID",
+            },
+          ],
+          responses: {
+            200: {
+              description: "Attendance deleted successfully",
+            },
+            404: {
+              description: "Attendance not found",
+            },
+            500: {
+              description: "Something went wrong",
+            },
+          },
+        },
+      },
+
+
+
+
+
+        "/api/v1/penalties": {
+          get: {
+            tags: ["penalties"],
+            summary: "Get all penalties",
+            description: "Retrieve all penalty records with user and post details",
+            operationId: "getAllPenalties",
+            responses: {
+              200: {
+                description: "Penalties fetched successfully",
+              },
+              401: {
+                description: "Unauthorized",
+              },
+              500: {
+                description: "Something went wrong",
+              },
+            },
+          },
+        },
+      
+        "/api/v1/penalties/mypenarities": {
+          get: {
+            tags: ["penalties"],
+            summary: "Get mypenarities by ID",
+            description: "Fetch a single penalty record by ID",
+            operationId: "Mypenarity",
+          
+            responses: {
+              200: {
+                description: "Penalty fetched successfully",
+              },
+              404: {
+                description: "Penalty not found",
+              },
+              500: {
+                description: "Something went wrong",
+              },
+            },
+          },
+      
+        
+        },
+        "/api/v1/penalties/{id}": {
+          get: {
+            tags: ["penalties"],
+            summary: "Get mypenarities by ID",
+            description: "Fetch a single penalty record by ID",
+            operationId: "getPenaltyById",
+            parameters: [
+              {
+                name: "id",
+                in: "path",
+                required: true,
+                schema: {
+                  type: "integer",
+                },
+                description: "Penalty ID",
+              },
+            ],
+            responses: {
+              200: {
+                description: "Penalty fetched successfully",
+              },
+              404: {
+                description: "Penalty not found",
+              },
+              500: {
+                description: "Something went wrong",
+              },
+            },
+          },
+      
+          delete: {
+            tags: ["penalties"],
+            summary: "Delete a penalty",
+            description: "Remove a penalty record",
+            operationId: "deletePenalty",
+            parameters: [
+              {
+                name: "id",
+                in: "path",
+                required: true,
+                schema: {
+                  type: "integer",
+                },
+                description: "Penalty ID",
+              },
+            ],
+            responses: {
+              200: {
+                description: "Penalty deleted successfully",
+              },
+              404: {
+                description: "Penalty not found",
+              },
+              500: {
+                description: "Something went wrong",
+              },
+            },
+          },
+        },
+      
+      
+      
+        "/api/v1/penalties/add": {
+          post: {
+            tags: ["penalties"],
+            summary: "Create a new penalty",
+            description: "Add a new penalty record for a user",
+            operationId: "createPenalty",
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  example: {
+                    postID: 1,
+                    penarity: "Penalty for missing the meeting",
+                  },
+                },
+              },
+            },
+            responses: {
+              201: {
+                description: "Penalty created successfully",
+              },
+              400: {
+                description: "Bad request",
+              },
+              401: {
+                description: "Unauthorized",
+              },
+              500: {
+                description: "Something went wrong",
+              },
+            },
+          },
+        },
+        "/api/v1/penalties/update/status/{id}": {
+          put: {
+            tags: ["penalties"],
+            summary: "update penalty",
+            description: "Add a update penalty record for a user",
+            operationId: "update",
+            parameters: [
+              {
+                name: "id",
+                in: "path",
+                required: true,
+                schema: {
+                  type: "integer",
+                },
+                description: "Penalty ID",
+              },
+            ],
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  example: {
+                    status: 'solved',
+                 
+                  },
+                },
+              },
+            },
+            responses: {
+              201: {
+                description: "Penalty created successfully",
+              },
+              400: {
+                description: "Bad request",
+              },
+              401: {
+                description: "Unauthorized",
+              },
+              500: {
+                description: "Something went wrong",
+              },
+            },
+          },
+        },
+      
+      
+      
+    
+    
+
+
 
 
 

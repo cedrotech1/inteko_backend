@@ -45,6 +45,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true
       },
+      nid: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      familyinfo: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       district_id: {
         type: Sequelize.INTEGER,
         allowNull: true
