@@ -11,7 +11,8 @@ import {
   checkEmail,
   checkCode,
   ResetPassword,
-  SignUp
+  SignUp,
+  getCitizen
 } from '../controllers/userController.js';
 import { protect } from '../middlewares/protect.js';
 import multer from 'multer';
@@ -20,6 +21,7 @@ const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
 
 router.get('/', protect, getAllUsers);
+router.get('/citizen', protect, getCitizen);
 router.get('/:id', protect, getOneUser);
 router.post('/addUser', protect, addUser);
 router.post('/signup', SignUp);
