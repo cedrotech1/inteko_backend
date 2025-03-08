@@ -326,6 +326,19 @@ export const getAllUsers = async (req, res) => {
       });
 
     }
+    if(req.user.role=='admin'){
+
+      let citizens = users.filter(user => user.role !== "citizen" && user.id !== req.user.id );
+      
+      // filter users ruturn users not have role of citizen
+      return res.status(200).json({
+        success: true,
+        message: "Users retrieved successfully",
+        users:citizens,
+      });
+
+    }
+
    
 
     return res.status(200).json({
