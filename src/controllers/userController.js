@@ -363,9 +363,6 @@ export const getCitizen = async (req, res) => {
 
       let citizens = users.filter(user => user.role === "citizen");
       
-     
-
-   
 
     return res.status(200).json({
       success: true,

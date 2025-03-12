@@ -9,6 +9,7 @@ import notification from './notificationRouter.js';
 import Address from './AddressRouter.js';
 import Attandance from './attandanceRoute.js';
 import Penarity from './penarities.js';
+import Fine from './penarityAmountRoutes.js';
 const router = express.Router();
 
 router.use('/docs', docrouter);
@@ -20,6 +21,7 @@ router.use('/attandance', Attandance);
 router.use('/categories', CategoriesRouter);
 router.use('/address', Address);
 router.use('/notification', notification);
+router.use('/fine', Fine);
 
 
 

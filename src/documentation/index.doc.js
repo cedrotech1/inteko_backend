@@ -27,6 +27,7 @@ const options = {
     { name: "comments", description: "comments" },
     { name: "attandance", description: "attandance" },
     { name: "penalties", description: "penalties" },
+    { name: "Fine", description: "Fine" },
 
 
 
@@ -977,6 +978,25 @@ const options = {
             },
           },
         },
+        "/api/v1/penalties/bylocation": {
+          get: {
+            tags: ["penalties"],
+            summary: "Get all penalties bylocation",
+            description: "Retrieve all penalty bylocation records with user and post details",
+            operationId: "getAllPenaltiesbylocation",
+            responses: {
+              200: {
+                description: "Penalties fetched successfully",
+              },
+              401: {
+                description: "Unauthorized",
+              },
+              500: {
+                description: "Something went wrong",
+              },
+            },
+          },
+        },
       
         "/api/v1/penalties/mypenarities": {
           get: {
@@ -1074,7 +1094,6 @@ const options = {
                 "application/json": {
                   example: {
                     postID: 1,
-                    penarity: "Penalty for missing the meeting",
                   },
                 },
               },
@@ -1139,6 +1158,72 @@ const options = {
             },
           },
         },
+        "/api/v1/penalties/pay": {
+          post: {
+            tags: ["penalties"],
+            summary: "pay a new pay penalty",
+            description: "pay a new penalty record for a user",
+            operationId: "payPenalty",
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  example: {
+                    penaltyID: 1,
+                    number: 1,
+                  },
+                },
+              },
+            },
+            responses: {
+              201: {
+                description: "Penalty created successfully",
+              },
+              400: {
+                description: "Bad request",
+              },
+              401: {
+                description: "Unauthorized",
+              },
+              500: {
+                description: "Something went wrong",
+              },
+            },
+          },
+        },
+        "/api/v1/penalties/checkout": {
+          post: {
+            tags: ["penalties"],
+            summary: "pay checkout",
+            description: "checkout",
+            operationId: "payPenalty",
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  example: {
+                    number: 1,
+                  },
+                },
+              },
+            },
+            responses: {
+              201: {
+                description: "Penalty created successfully",
+              },
+              400: {
+                description: "Bad request",
+              },
+              401: {
+                description: "Unauthorized",
+              },
+              500: {
+                description: "Something went wrong",
+              },
+            },
+          },
+        },
+      
       
       
       
@@ -1647,6 +1732,63 @@ const options = {
               example: {
                 comment: "yes yes.......",
                 postID:"1",
+               
+              },
+            },
+            required: true,
+          },
+        },
+        responses: {
+          201: {
+            description: "User created successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          500: {
+            description: "Something went wrong",
+          },
+        },
+      },
+    },
+
+    "/api/v1/fine/": {
+      get: {
+        tags: ["Fine"],
+        summary: "get",
+        description: "get Fine",
+        operationId: "Fine",
+
+        responses: {
+          201: {
+            description: "User created successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          500: {
+            description: "Something went wrong",
+          },
+        },
+      },
+    },
+    "/api/v1/fine/update": {
+      put: {
+        tags: ["Fine"],
+        summary: "get",
+        description: "get Fine",
+        operationId: "UpdateFine",
+        requestBody: {
+          content: {
+            "application/json": {
+              example: {
+                amount: 300,
                
               },
             },

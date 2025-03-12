@@ -3,7 +3,8 @@ import {
   markAttendance,
   getAllAttendances,
   getAttendanceById,
-  deleteAttendance
+  deleteAttendance,
+  
 } from "../controllers/attandanceController.js";
 
 import { protect } from "../middlewares/protect.js"; // Middleware for authentication
